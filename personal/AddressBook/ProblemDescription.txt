@@ -1,0 +1,40 @@
+We are migrating CRM solutions, and we have an export of our customer contact details from our
+legacy solution in a text file.
+The export file format is defined as:
+• Each customer on a single line (customers can't be defined in more than one line)
+• Each line is formatted as:
+◦
+<customer name>#<collection of fields separated by '#'...>
+◦ Each field is formatted as:
+▪
+<field index>|<field value>
+▪ The field indexes range from 1-4, which describes the field value:
+• 1 – First line of customer's address
+• 2 – Customer's town
+• 3 – Customer's post code
+• 4 – Customer's phone number
+As an example, our customer 'Bob Smith' who can be reached on '0123456678' and lives at '1, Manor
+Avenue, London, SE3' would be formatted to the line:
+Bob Smith#1|1, Manor Avenue#2|London#3|SE3#4|0123456678
+However, the export process is a “bit buggy”. Even though the format of the exported file is “correct”, it
+has quite a few irregularities with the data that need to be fixed:
+• Customers are defined on more than one line
+• Some lines are incomplete with their field definitions
+• For some customers, the same field has been defined more than once on separate lines
+You are required to write a method that reads in the exported file, parse it, and re-write a new exported
+file:
+• Each customer should only be on one line with all fields discovered for that customer on the
+same line
+• If you discover a field for a customer that has been defined more than once in the file, you
+should use the latest field
+We have attached a file called “addressbook.txt” which is the exported file with irregularities that need
+to be fixed.
+We're not certain on the exact number of customers that we have in the CRM, but we think it should
+be somewhere between 11,000 – 12,000. We do know that all customers in our CRM should have all 4
+fields mentioned above.
+We have another CRM database due for migration with close to 1,000,000 customers, which we're
+hoping your solution will be fast enough that we can re-use it.
+An example Java interface would be:
+public interface AddressBookFixer {
+void fixAddressBook(String inputFilename, String outputFilename);
+}
