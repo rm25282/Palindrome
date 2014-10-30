@@ -1,4 +1,6 @@
+
 Instructions for use in Eclipse
+----------------------------------
 
 - Right click on AddressBookFixerImpl.java and choose Run Configurations.
 - Add your input file and out file names and paths to the arguments tab
@@ -20,6 +22,7 @@ in which case please add
 -Xmx2048m
 
 to your jvm arguments
+
 
 
 
