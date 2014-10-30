@@ -1,0 +1,24 @@
+You need to create a playing card shuffler. Each deck contains 4 suits: Spades, Clubs, Hearts and
+Diamonds. Each suit has 13 cards: 9 cards numbered from 2 till 10, a Jack, a Queen, a King and an
+Ace. There are 52 cards in total.
+You're required to:
+• Model the cards themselves
+• Provide an implementation of the shuffler, which should have:
+◦ A method to return the next card on the deck. When there are no further cards, the deck
+should automatically reshuffle, and return the next card on the deck.
+◦ A method to reshuffle the deck itself.
+◦ As this is a single deck shuffler, it should not be possible to return duplicate cards until the
+deck is reshuffled (automatically, or explicitly).
+An example Java interface would be:
+public interface DeckShuffler {
+/**
+* Provides the next card from a random shuffled deck
+*
+* @return the next card from the deck
+*/
+Card nextCard();
+/**
+* Reshuffles the whole deck again
+*/
+void reshuffle();
+}
