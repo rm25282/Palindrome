@@ -40,7 +40,7 @@ public class MarketStatisticsTest {
         
         marketStatistics.add(currency, amount);
         
-        assertEquals(amount, marketStatistics.getAmountForCurrency(currency));
+        assertEquals(amount, marketStatistics.getAmountForCurrency("YYYY"));
     }
     
     @Test
@@ -60,6 +60,4 @@ public class MarketStatisticsTest {
         assertEquals(amount, marketStatistics.getAmountForCurrency(currency));
         assertEquals(10000, marketStatistics.getAmountForCurrency("XXX"));
     }
-    
-
 }

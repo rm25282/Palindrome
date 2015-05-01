@@ -13,25 +13,34 @@ import com.richard.mtp.store.InMemoryStore;
 @RestController
 public class MarketTradeController {
 
-    private InMemoryStore inMemoryStore = new InMemoryStore();
-    
-    private static MarketStatistics marketStats = new MarketStatistics(); 
-    
-    @RequestMapping(value = "/mtp", 
-            method = RequestMethod.POST)
-    public String message(@RequestBody MarketData marketData) {
-        inMemoryStore.add(marketData);
-        
-        marketStats.add(marketData.getCurrencyFrom(), marketData.getAmountBuy());
-        
-        return "OK";
-    }
+	private InMemoryStore inMemoryStore = new InMemoryStore();
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(3000); // simulated delay
-        return new Greeting("Hello");
-    }
-    
+	private static MarketStatistics marketStats = new MarketStatistics();
+
+	@RequestMapping(value = "/mtp", method = RequestMethod.POST)
+	public String message(@RequestBody MarketData marketData) {
+		System.out.println("Got " + marketData.getAmountBuy());
+		
+		inMemoryStore.add(marketData);
+
+		marketStats
+				.add(marketData.getCurrencyFrom(), marketData.getAmountBuy());
+
+		return "OK";
+	}
+
+	@MessageMapping("/hello")
+	@SendTo("/topic/stats")
+	public MarketDataToDisplay getLatestMarketStats(String currency)
+			throws Exception {
+		MarketDataToDisplay marketDataToDisplay = new MarketDataToDisplay(
+				String.valueOf(marketStats.getAmountForCurrency("EUR")), 
+				String.valueOf(marketStats.getAmountForCurrency("USD")),
+				String.valueOf(marketStats.getAmountForCurrency("GBP")),
+				String.valueOf(marketStats.getAmountForCurrency("YEN")),
+				String.valueOf(marketStats.getAmountForCurrency("AUS")),
+				String.valueOf(marketStats.getAmountForCurrency("OTHER")));
+		
+		return marketDataToDisplay;
+	}
 }

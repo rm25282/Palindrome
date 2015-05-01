@@ -3,6 +3,8 @@ package com.richard.mtp.stats;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.springframework.util.Assert;
+
 public class MarketStatistics {
     
     private Map<String, Long> currencySold = new Hashtable<String, Long>();
@@ -22,12 +24,16 @@ public class MarketStatistics {
            currencySold.put(currency, currentAmount+amount);    
        } else {
            long currentAmount = currencySold.get("OTHER");
-           currencySold.put(currency, currentAmount+amount);
+           currencySold.put("OTHER", currentAmount+amount);
        }
     }
 
     public long getAmountForCurrency(String currency) {
-        return currencySold.get(currency);
+    	if (currencySold.containsKey(currency)) {
+    		return currencySold.get(currency);
+    	}
+
+    	return currencySold.get("OTHER");
     }
 
 }
