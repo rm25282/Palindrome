@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
+    <title>Market Trade Processing Statistics</title>
     <script src="sockjs-0.3.4.js"></script>
     <script src="stomp.js"></script>
     <script src="Chart.js"></script>
@@ -27,19 +27,20 @@
         }
 
         function connect() {
-            var socket = new SockJS('/hello');
+            var socket = new SockJS('/getstats');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 setConnected(true);
                 console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/stats', function(getLatestMarketStats){
-                    showGreeting(
+                    updatePageData(	
                     JSON.parse(getLatestMarketStats.body).eurAmount,
                     JSON.parse(getLatestMarketStats.body).usdAmount,
                     JSON.parse(getLatestMarketStats.body).gbpAmount,
                     JSON.parse(getLatestMarketStats.body).yenAmount,
                     JSON.parse(getLatestMarketStats.body).ausAmount,
-                    JSON.parse(getLatestMarketStats.body).otherAmount);
+                    JSON.parse(getLatestMarketStats.body).otherAmount,
+                    JSON.parse(getLatestMarketStats.body).noOfTransactions);
                 });
             });
 
@@ -56,10 +57,11 @@
         }
 
         function getAllData() {	
-            stompClient.send("/app/hello", {}, "name");            
+            stompClient.send("/app/getstats");            
         }
 
-        function showGreeting(eurAmount, usdAmount, gbpAmount, yenAmount, ausAmount, otherAmount) {
+        function updatePageData(eurAmount, usdAmount, gbpAmount, yenAmount, 
+        						ausAmount, otherAmount, noOfTransactions) {
             var response = document.getElementById('response');
             myBarChart.datasets[0].bars[0].value = eurAmount;
             myBarChart.datasets[0].bars[1].value = usdAmount;
@@ -68,6 +70,8 @@
             myBarChart.datasets[0].bars[4].value = ausAmount;
             myBarChart.datasets[0].bars[5].value = otherAmount;
             myBarChart.update();
+            
+            document.getElementById('p1').value = noOfTransactions;
         }
         
         window.setInterval("getAllData()", 300);
@@ -78,9 +82,7 @@
     Javascript and reload this page!</h2></noscript>
 <div>
     <div id="conversationDiv">
-        <p id="p1">Number of transactions: 0</p>	
-                
-        	
+        <p id="p1">Number of transactions: 0</p>
     </div>
     
     <canvas id="marketTrend" width="600" height="400"></canvas>

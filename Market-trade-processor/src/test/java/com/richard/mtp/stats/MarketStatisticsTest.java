@@ -60,4 +60,21 @@ public class MarketStatisticsTest {
         assertEquals(amount, marketStatistics.getAmountForCurrency(currency));
         assertEquals(10000, marketStatistics.getAmountForCurrency("XXX"));
     }
+    
+    @Test
+    public void isNoOfTransactionsZeroAtInitialisation() {
+    	MarketStatistics marketStatistics = new MarketStatistics();
+    	
+    	assertEquals(0, marketStatistics.getNoOfTransactions());
+    }
+    
+    @Test
+    public void checkNoOftransactionsIsEqualToWhatIsSet() {
+    	MarketStatistics marketStatistics = new MarketStatistics();
+    	
+    	marketStatistics.setNoOfTransactions(123456);
+    	
+    	assertEquals(123456, marketStatistics.getNoOfTransactions());
+    }
+    
 }

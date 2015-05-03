@@ -8,16 +8,18 @@ public class MarketDataToDisplay {
 	private String yenAmount = "";
 	private String ausAmount = "";
 	private String otherAmount = "";
+	private String noOfTransactions = "";
 
 	public MarketDataToDisplay(String eurAmount, String usdAmount,
 			String gbpAmount, String yenAmount, String ausAmount,
-			String otherAmount) {
+			String otherAmount, String noOfTransactions) {
 		this.eurAmount = eurAmount;
 		this.usdAmount = usdAmount;
 		this.gbpAmount = gbpAmount;
 		this.yenAmount = yenAmount;
 		this.ausAmount = ausAmount;
 		this.otherAmount = otherAmount;
+		this.noOfTransactions = noOfTransactions;
 	}
 
 	public String getEurAmount() {
@@ -42,5 +44,9 @@ public class MarketDataToDisplay {
 
 	public String getOtherAmount() {
 		return otherAmount;
+	}
+
+	public String getNoOfTransactions() {
+		return noOfTransactions;
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.richard.mtp.stats.MarketStatistics;
+import com.richard.mtp.stats.MarketStatisticsCalculator;
 import com.richard.mtp.store.InMemoryStore;
 
 @RestController
@@ -15,31 +16,35 @@ public class MarketTradeController {
 
 	private InMemoryStore inMemoryStore = new InMemoryStore();
 
-	private static MarketStatistics marketStats = new MarketStatistics();
+	private MarketStatisticsCalculator marketStatisticsCalculator = new MarketStatisticsCalculator(
+			inMemoryStore);
 
 	@RequestMapping(value = "/mtp", method = RequestMethod.POST)
 	public String message(@RequestBody MarketData marketData) {
-		System.out.println("Got " + marketData.getAmountBuy());
-		
-		inMemoryStore.add(marketData);
 
-		marketStats
-				.add(marketData.getCurrencyFrom(), marketData.getAmountBuy());
+		inMemoryStore.add(marketData);
 
 		return "OK";
 	}
 
-	@MessageMapping("/hello")
+	@MessageMapping("/getstats")
 	@SendTo("/topic/stats")
-	public MarketDataToDisplay getLatestMarketStats(String currency)
-			throws Exception {
+	public MarketDataToDisplay getLatestMarketStats() throws Exception {
+		return convertStatsToDisplayMessage();
+	}
+
+	private MarketDataToDisplay convertStatsToDisplayMessage() {
+		MarketStatistics marketStatistics = marketStatisticsCalculator
+				.getLatestMarketStatistics();
+
 		MarketDataToDisplay marketDataToDisplay = new MarketDataToDisplay(
-				String.valueOf(marketStats.getAmountForCurrency("EUR")), 
-				String.valueOf(marketStats.getAmountForCurrency("USD")),
-				String.valueOf(marketStats.getAmountForCurrency("GBP")),
-				String.valueOf(marketStats.getAmountForCurrency("YEN")),
-				String.valueOf(marketStats.getAmountForCurrency("AUS")),
-				String.valueOf(marketStats.getAmountForCurrency("OTHER")));
+				String.valueOf(marketStatistics.getAmountForCurrency("EUR")),
+				String.valueOf(marketStatistics.getAmountForCurrency("USD")),
+				String.valueOf(marketStatistics.getAmountForCurrency("GBP")),
+				String.valueOf(marketStatistics.getAmountForCurrency("YEN")),
+				String.valueOf(marketStatistics.getAmountForCurrency("AUS")),
+				String.valueOf(marketStatistics.getAmountForCurrency("OTHER")),
+				String.valueOf(marketStatistics.getNoOfTransactions()));
 		
 		return marketDataToDisplay;
 	}

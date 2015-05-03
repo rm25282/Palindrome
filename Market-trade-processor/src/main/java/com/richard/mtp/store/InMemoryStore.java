@@ -20,5 +20,9 @@ public class InMemoryStore {
     public MarketData get(int i) {
         return marketData.get(i);
     }
+    
+    public List<MarketData> getAll() {
+    	return marketData;
+    }
 
 }
