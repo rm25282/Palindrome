@@ -46,7 +46,7 @@
 
 			var marketTrend = document.getElementById("marketTrend").getContext("2d");
 			myBarChart = new Chart(marketTrend).Bar(barData);
-        }
+		}
 
         function disconnect() {
             if (stompClient != null) {
@@ -71,7 +71,7 @@
             myBarChart.datasets[0].bars[5].value = otherAmount;
             myBarChart.update();
             
-            document.getElementById('p1').value = noOfTransactions;
+            document.getElementById('p1').innerText = noOfTransactions;
         }
         
         window.setInterval("getAllData()", 300);
@@ -82,11 +82,15 @@
     Javascript and reload this page!</h2></noscript>
 <div>
     <div id="conversationDiv">
-        <p id="p1">Number of transactions: 0</p>
+        Number of transactions:<label id="p1" value="0" ></label>
     </div>
-    
+    <br>
+    <br>
+    <div>
     <canvas id="marketTrend" width="600" height="400"></canvas>
-    
+    </div>
 </div>
+
+Amount of Currency Sold / Currency
 </body>
 </html>

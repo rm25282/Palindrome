@@ -1,4 +1,4 @@
-package com.richard.mtp.rest;
+package com.richard.mtp.web;
 
 public class MarketDataToDisplay {
 

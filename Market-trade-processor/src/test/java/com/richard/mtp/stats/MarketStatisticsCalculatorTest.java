@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.richard.mtp.rest.MarketData;
-import com.richard.mtp.rest.MarketDataToDisplay;
 import com.richard.mtp.store.InMemoryStore;
+import com.richard.mtp.web.MarketDataToDisplay;
 
 public class MarketStatisticsCalculatorTest {
     

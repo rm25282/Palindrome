@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.richard.mtp.stats.MarketStatistics;
 import com.richard.mtp.stats.MarketStatisticsCalculator;
 import com.richard.mtp.store.InMemoryStore;
+import com.richard.mtp.web.MarketDataToDisplay;
 
 @RestController
 public class MarketTradeController {

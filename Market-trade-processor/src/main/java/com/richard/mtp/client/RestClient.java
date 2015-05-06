@@ -19,11 +19,11 @@ public class RestClient {
 
 		dataSetup();
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 1; i < 10; i++) {
 			for (String currency : currencies) {
 
 				marketData.setCurrencyFrom(currency);
-				marketData.setAmountBuy(i * new Random().nextInt(1000000));
+				marketData.setAmountSell(i * new Random().nextInt(1000000));
 
 				ResponseEntity<String> response = restTemplate.postForEntity(
 						"http://localhost:8080/mtp", marketData, String.class);
