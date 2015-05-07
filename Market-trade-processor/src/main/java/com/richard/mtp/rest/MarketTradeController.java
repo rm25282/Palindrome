@@ -1,5 +1,7 @@
 package com.richard.mtp.rest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +23,13 @@ public class MarketTradeController {
 			inMemoryStore);
 
 	@RequestMapping(value = "/mtp", method = RequestMethod.POST)
-	public String message(@RequestBody MarketData marketData) {
+	public ResponseEntity<String> message(@RequestBody MarketData marketData) {
 
 		inMemoryStore.add(marketData);
+		
+		ResponseEntity<String> response = new ResponseEntity<String>("Added successfully to memory store", HttpStatus.OK);
 
-		return "OK";
+		return response;
 	}
 
 	@MessageMapping("/getstats")
