@@ -24,9 +24,9 @@ public class RestClient {
 
 				marketData.setCurrencyFrom(currency);
 				marketData.setAmountSell(i * new Random().nextInt(1000000));
-
+				
 				ResponseEntity<String> response = restTemplate.postForEntity(
-						"http://localhost:8080/mtp", marketData, String.class);
+				 "http://localhost:8080/mtp", marketData, String.class);
 
 				System.out.println(response);
 

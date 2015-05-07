@@ -1,12 +1,11 @@
 package com.richard.mtp.stats;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.richard.mtp.rest.MarketData;
 import com.richard.mtp.store.InMemoryStore;
-import com.richard.mtp.web.MarketDataToDisplay;
 
 public class MarketStatisticsCalculatorTest {
     
