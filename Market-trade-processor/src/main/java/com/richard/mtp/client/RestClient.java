@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,8 +28,13 @@ public class RestClient {
 				marketData.setCurrencyFrom(currency);
 				marketData.setAmountSell(i * new Random().nextInt(1000000));
 				
+				HttpHeaders headers = new HttpHeaders();
+				headers.set("Authorization", "Basic dXNlcjpwYXNzd29yZA==");
+				headers.setContentType(MediaType.APPLICATION_JSON);
+				HttpEntity<MarketData> entity = new HttpEntity<MarketData>(marketData, headers);
+				
 				ResponseEntity<String> response = restTemplate.postForEntity(
-				 "http://localhost:8080/mtp", marketData, String.class);
+				 "http://192.168.1.217:8080/mtp", entity, String.class);
 
 				System.out.println(response);
 
